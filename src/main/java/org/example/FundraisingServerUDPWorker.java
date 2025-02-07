@@ -27,13 +27,7 @@ public class FundraisingServerUDPWorker implements Runnable {
             String [] peticionArgumentos = comando.split(" ");
             gestionarComunicacion(peticionArgumentos, direccion, puertoCliente);
 
-            double dineroAportado = Double.parseDouble(peticionArgumentos[1]);
-            money.setTotalMoney(money.getTotalMoney()+dineroAportado);
-            String respuesta = "HAS APORTADO + "+dineroAportado + "y HAY EN TOTAL "+money.getTotalMoney();
-            buffer = respuesta.getBytes();
 
-            DatagramPacket answer = new DatagramPacket(buffer, buffer.length, direccion, puertoCliente);
-            udpSocket.send(answer);
 
         } catch (UnsupportedEncodingException unsEx){
             System.out.println("NON CHE SOPORTA O ENCODING");
@@ -50,20 +44,28 @@ public class FundraisingServerUDPWorker implements Runnable {
             case "ADD":
                 double dineroAportado = Double.parseDouble(argumentos[1]);
                 money.setTotalMoney(money.getTotalMoney()+dineroAportado);
-                String respuesta = "HAS APORTADO + "+dineroAportado + "y HAY EN TOTAL "+money.getTotalMoney();
+                String respuesta = "HAS APORTADO "+dineroAportado + " Y HAY EN TOTAL "+money.getTotalMoney();
+                System.out.println("EL CLIENTE HA APORTADO "+dineroAportado);
                 buffer = respuesta.getBytes();
                 DatagramPacket answer = new DatagramPacket(buffer, buffer.length, direcc, puertoC);
                 udpSocket.send(answer);
+                break;
 
             case "SHOW":
-                String respuestaShow = "SE HAN RECAUDADO "+money.getTotalMoney();
+                String respuestaShow = "SE HA RECAUDADO "+money.getTotalMoney();
+                System.out.println("EL CLIENTE PIDE MOSTRAR EL TOTAL, QUE ASCIENDE A "+money.getTotalMoney());
                 buffer = respuestaShow.getBytes();
                 DatagramPacket answerShow = new DatagramPacket(buffer, buffer.length, direcc, puertoC);
                 udpSocket.send(answerShow);
+                break;
 
             case "QUIT":
                 String respuestaQuit = "Gracias por venir";
+                System.out.println("CERRANDO CONEXIÓN CON EL CLIENTE");
                 buffer = respuestaQuit.getBytes();
+                DatagramPacket answerQuit = new DatagramPacket(buffer, buffer.length, direcc, puertoC);
+                udpSocket.send(answerQuit);
+                break;
 
 
         }
