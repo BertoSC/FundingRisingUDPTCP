@@ -27,8 +27,6 @@ public class FundraisingServerUDPWorker implements Runnable {
             String [] peticionArgumentos = comando.split(" ");
             gestionarComunicacion(peticionArgumentos, direccion, puertoCliente);
 
-
-
         } catch (UnsupportedEncodingException unsEx){
             System.out.println("NON CHE SOPORTA O ENCODING");
 
