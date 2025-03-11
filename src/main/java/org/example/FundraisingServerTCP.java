@@ -10,10 +10,10 @@ public class FundraisingServerTCP {
     public static void main(String[] args) {
         try {
             ServerSocket serverSocket = new ServerSocket(PORT);
+            Founds founds = new Founds();
             while (true){
                 try{
                     Socket socket = serverSocket.accept();
-                    Founds founds = new Founds();
                     Thread th = new Thread(new FundraisingServerTCPWorker(founds, socket));
                     th.start();
 

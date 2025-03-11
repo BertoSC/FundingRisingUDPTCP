@@ -29,6 +29,7 @@ public class FundraisingClientTCP {
                 }
             }
             socket.close();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
